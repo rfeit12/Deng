@@ -1,0 +1,47 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Node2D
+
+onready var camera = get_node(\"Camera2D\")
+onready var tween = get_node(\"Tween\")
+var mudando
+
+func _process(delta):
+#	transicao($Camera2D, $Camera2D2)
+	yield(get_tree().create_timer(3),\"timeout\")
+	
+#func transicao(from: Camera2D, to: Camera2D, duration: float = 1.0) -> void:
+#	if mudando: return
+#	Camera2D.zoom = from.zoom
+#	Camera2D.offset = from.offset
+#	Camera2D.light_mask = from.light_mask
+#
+#	Camera2D.global_transform = from.global_position
+#	Camera2D.current = true
+#
+#	mudando = true
+#
+#	tween.remove_all()
+#	tween.interpolate_property(camera, \"global_transform\", camera.global_transform, to.global_transform, duration, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
+#
+#	tween.interpolate_property(camera, \"zoom\", camera.zoom, to.zoom, duration, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
+#
+#	tween.interpolate_property(camera, \"offset\", camera.offset, to.offset, duration, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
+#	tween.start()
+#
+#	yield(tween, \"tween_all_completed\")
+#
+#	to.current = true
+#	mudando = false
+"
+
+[node name="TransicaoCamera" type="Node2D"]
+script = SubResource( 1 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Camera2D2" type="Camera2D" parent="."]
+position = Vector2( 632, 269 )
+
+[node name="Tween" type="Tween" parent="."]
