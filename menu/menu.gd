@@ -25,18 +25,19 @@ func _ready():
 		$AudioStreamPlayer2D.play()
 	
 func _on_TextureButton_pressed():
-	transition_camera2D($Camera2D, $KinematicBody2D/Camera2D)
+	transition_camera2D($Camera2D, $player/Camera2D)
+	yield(get_tree().create_timer(1), "timeout")
 	apagar_fogueira()
 	yield(fogueira,"animation_finished")
-	get_node("KinematicBody2D").simulacao = true
+	get_node("player").simulacao = true
 	apagar_HUD()
 
 func apagar_fogueira():
 	$AnimatedSprite.play("apagando")
 	yield(get_tree().create_timer(0.8), "timeout")
-	$KinematicBody2D/reacoes.play("exclamacao")
+	$player/reacoes.play("exclamacao")
 	yield(fogueira,"animation_finished")
-	$KinematicBody2D/reacoes.play("vazio")
+	$player/reacoes.play("vazio")
 	$AnimatedSprite.play("apagada")
 	
 
@@ -79,11 +80,11 @@ func transition_camera2D(from: Camera2D, to: Camera2D, duration: float = 2.5) ->
 	to.current = true
 
 func _on_Area2D_body_entered(body):
-	if $KinematicBody2D/Camera2D.current:
+	if $player/Camera2D.current:
 		$StaticBody2D/CollisionShape2D.disabled = false
-		transition_camera2D($KinematicBody2D/Camera2D, $CameraPenhasco, 8)
+		transition_camera2D($player/Camera2D, $CameraPenhasco, 8)
 		simulacao = false
-		$KinematicBody2D/AudioStreamPlayer2D.stream = dramatic_sound
-		$KinematicBody2D/AudioStreamPlayer2D.play()
+		$player/AudioStreamPlayer2D.stream = dramatic_sound
+		$player/AudioStreamPlayer2D.play()
 		yield(get_tree().create_timer(15),"timeout")
 		get_tree().change_scene("res://titulo.tscn")
