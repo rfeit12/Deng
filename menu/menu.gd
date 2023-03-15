@@ -25,8 +25,8 @@ func _ready():
 		$AudioStreamPlayer2D.play()
 	
 func _on_TextureButton_pressed():
+	$HUD/TextureButton.disabled = true
 	transition_camera2D($Camera2D, $player/Camera2D)
-	yield(get_tree().create_timer(1), "timeout")
 	apagar_fogueira()
 	yield(fogueira,"animation_finished")
 	get_node("player").simulacao = true
@@ -34,7 +34,7 @@ func _on_TextureButton_pressed():
 
 func apagar_fogueira():
 	$AnimatedSprite.play("apagando")
-	yield(get_tree().create_timer(0.8), "timeout")
+	yield(get_tree().create_timer(1.5), "timeout")
 	$player/reacoes.play("exclamacao")
 	yield(fogueira,"animation_finished")
 	$player/reacoes.play("vazio")

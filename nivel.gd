@@ -1,37 +1,48 @@
 extends Node2D
 
-onready var musica = preload("res://assets/musica_caindo.mp3")
-onready var player = get_node("KinematicBody2D")
-
-const PLAYER_COLORS = [
-	Color(1, 1, 1, 0.9),
-	Color(1, 1, 1, 0.8),
-	Color(1, 1, 1, 0.7),
-	Color(1, 1, 1, 0.6),
-	Color(1, 1, 1, 0.5),
-	Color(1, 1, 1, 0.4),
-	Color(1, 1, 1, 0.3),
-	Color(1, 1, 1, 0.2),
-	Color(1, 1, 1, 0.1),
-	Color(1, 1, 1, 0.0),
-]
+onready var player = get_node("player")
+onready var camera2d = get_node("Camera2D")
+onready var tween = get_node("Camera2D/Tween")
 
 func _ready():
-	yield(get_tree().create_timer(2.5),"timeout")
-	MusicaControle.tocar(musica)
-	textos()
-	player.deng_cai()
+	$TileMap_branco.set_collision_mask_bit(1, false)
+	player.motion.y = 500
+	$player/Sprite.flip_h = true
+	player.simulacao = true
+	yield(get_tree().create_timer(3),"timeout")
+	$TileMap_branco.set_collision_mask_bit(1, true)
+	yield(get_tree().create_timer(1.5),"timeout")
+	transition_camera2D(camera2d, $player/Camera2D, 2)
+	yield(get_tree().create_timer(2),"timeout")
+	player.motion.y = 0
 
-func textos():
-	yield(get_tree().create_timer(2.4),"timeout")
-	$Label.text = "Feito por:\nRenan Feitosa"
-	yield(get_tree().create_timer(5),"timeout")
-	for i in range(10):
-		$Label.modulate = Color(PLAYER_COLORS[i])
-		yield(get_tree().create_timer(0.1), "timeout")
-	yield(get_tree().create_timer(4),"timeout")
-	$Label.text = "Deng"
-	$Label.rect_position = Vector2(256, 100)
-	$Label.modulate = Color(1,1,1,1)
-	$Label.get("custom_fonts/font").set_size(150)
-	$deng_ideograma.show()
+func switch_camera(from, to) -> void:
+	from.current = false
+	to.current = true
+
+func transition_camera2D(from: Camera2D, to: Camera2D, duration: float = 2.5) -> void:
+	yield(get_tree().create_timer(0.3), "timeout")
+	var transitioning = false
+	if transitioning: return
+	camera2d.zoom = from.zoom
+	camera2d.offset = from.offset
+	
+	camera2d.global_transform = from.global_transform
+	
+	camera2d.current = true
+	transitioning = true
+
+	tween = create_tween()
+	tween.set_parallel(true)
+	tween.set_ease(Tween.EASE_IN_OUT)
+	tween.set_trans(Tween.TRANS_CUBIC)
+	tween.tween_property(camera2d, "global_transform", to.global_transform, duration).from(camera2d.global_transform)
+	tween.tween_property(camera2d, "zoom", to.zoom, duration).from(camera2d.zoom)
+#	tween.tween_property(camera2d, "fov", to.fov, duration).from(camera2d.fov)
+	
+	yield(get_tree().create_timer(duration), "timeout")
+	
+	to.current = false
+	transitioning = false
+	
+	to.current = true

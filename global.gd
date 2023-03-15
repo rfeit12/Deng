@@ -5,6 +5,5 @@ signal hitted
 
 func emit_hit():
 	emit_signal("hitted")
-	
 
 

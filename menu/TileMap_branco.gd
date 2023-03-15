@@ -7,17 +7,12 @@ func _ready():
 	var tile = Global.connect("hitted",self,"change")
 	
 func change():
-	cell = world_to_map(Global.som)
+	cell = Global.som
+#	world_to_map(Global.som)
 	cell_id = get_cellv(cell)
-	gradient()
-
-func gradient():
-	while cell_id != 11:
+	if cell_id == 0:
 		match cell_id:
-			cell_id: set_cellv(cell, cell_id+1)
-		cell_id+=1
-	yield(get_tree().create_timer(3),"timeout")
-	back()
+			cell_id: set_cellv(cell, 1)
 	
 var cell_brancas
 var cell_id_brancas
