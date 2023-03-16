@@ -28,8 +28,6 @@ func _on_TextureButton_pressed():
 	$HUD/TextureButton.disabled = true
 	transition_camera2D($Camera2D, $player/Camera2D)
 	apagar_fogueira()
-	yield(fogueira,"animation_finished")
-	get_node("player").simulacao = true
 	apagar_HUD()
 
 func apagar_fogueira():
@@ -37,16 +35,29 @@ func apagar_fogueira():
 	yield(get_tree().create_timer(1.5), "timeout")
 	$player/reacoes.play("exclamacao")
 	yield(fogueira,"animation_finished")
-	$player/reacoes.play("vazio")
 	$AnimatedSprite.play("apagada")
+	yield(get_tree().create_timer(1.5), "timeout")
+	$player/reacoes.play("triste")
+	yield(fogueira,"animation_finished")
+	yield(get_tree().create_timer(1.5), "timeout")
+	$player/reacoes.play("vazio")
+	get_node("player").simulacao = true
+	$TeclasWasd.show()
+	yield(get_tree().create_timer(1.5), "timeout")
+	apagar_teclas()
 	
-
 func apagar_HUD():
 	$HUD.modulate = Color(1,1,1,0)
 	for i in range(10):
 		$HUD.modulate = Color(PLAYER_COLORS[i])
-		yield(get_tree().create_timer(0.06), "timeout")
-		
+		yield(get_tree().create_timer(0.06), "timeout")	
+
+func apagar_teclas():
+	$TeclasWasd.modulate = Color(1,1,1,0)
+	for i in range(10):
+		$TeclasWasd.modulate = Color(PLAYER_COLORS[i])
+		yield(get_tree().create_timer(0.06), "timeout")	
+
 
 func switch_camera(from, to) -> void:
 	from.current = false

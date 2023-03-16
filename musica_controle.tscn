@@ -6,3 +6,5 @@
 script = ExtResource( 1 )
 
 [node name="musica" type="AudioStreamPlayer" parent="."]
+
+[connection signal="finished" from="musica" to="." method="_on_musica_finished"]

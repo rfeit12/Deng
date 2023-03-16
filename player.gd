@@ -40,14 +40,17 @@ func _process(delta):
 			motion.x = 0
 		
 		if !is_on_floor() and !iswall.is_colliding():
-			$Sprite.play("jump");
-			$Sprite.rotation_degrees = 0
+			$CollisionShape2D.position = Vector2(0,-7)
+			$Sprite.play("run")
 		elif iswall.is_colliding() and !is_on_floor():
-			$Sprite.play("idle")
 			if iswall.scale.x < 0:
-				$Sprite.rotation_degrees = 90
+				$Sprite.play("wall")
+				$CollisionShape2D.position = Vector2(4,-4)
+				$Sprite.flip_h = false
 			elif iswall.scale.x > 0:
-				$Sprite.rotation_degrees = -90
+				$Sprite.play("wall")
+				$CollisionShape2D.position = Vector2(-4,-4)
+				$Sprite.flip_h = true
 		elif Input.is_action_pressed("ui_right") or Input.is_action_pressed("ui_left"):
 			$Sprite.play("run");
 		elif !atacando:
@@ -83,10 +86,8 @@ func deng_cai():
 	var caindo = true
 	motion.y += 50
 	while caindo:
-		self.rotation_degrees += 20
+		self.rotation_degrees += 10
 		yield(get_tree().create_timer(0.07),"timeout")
-		if position.y > get_viewport().size.y + 250 :
-			get_tree().change_scene("res://nivel.tscn")
 		
 	
 func _on_Area2D_body_entered(body):

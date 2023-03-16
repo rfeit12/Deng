@@ -1,0 +1,6 @@
+[gd_scene format=2]
+
+[node name="fade_out" type="ColorRect"]
+modulate = Color( 0, 0, 0, 1 )
+margin_right = 1022.0
+margin_bottom = 598.0

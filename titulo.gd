@@ -1,6 +1,7 @@
 extends Node2D
 
 onready var musica = preload("res://assets/musica_caindo.mp3")
+onready var musica_nivel1 = preload("res://assets/musica_completa.mp3")
 onready var player = get_node("player")
 
 const PLAYER_COLORS = [
@@ -25,6 +26,7 @@ func _ready():
 func textos():
 	yield(get_tree().create_timer(2.4),"timeout")
 	$Label.text = "Feito por:\nRenan Feitosa"
+	pular_cutscene()
 	yield(get_tree().create_timer(5),"timeout")
 	for i in range(10):
 		$Label.modulate = Color(PLAYER_COLORS[i])
@@ -35,3 +37,21 @@ func textos():
 	$Label.modulate = Color(1,1,1,1)
 	$Label.get("custom_fonts/font").set_size(150)
 	$deng_ideograma.show()
+
+func pular_cutscene():
+	yield(get_tree().create_timer(1), "timeout")
+	$pular_cutscene.show()
+	yield(get_tree().create_timer(2), "timeout")
+	$pular_cutscene.hide()
+	
+var pressionando = false
+func _process(delta):
+	if player.position.y > get_viewport().size.y + 250 :
+		get_tree().change_scene("res://niveis/nivel1/nivel.tscn")
+	if Input.is_action_pressed("attack"):
+		pressionando = true
+		yield(get_tree().create_timer(2), "timeout")
+		if Input.is_action_pressed("attack"):
+			MusicaControle.tocar()
+			get_tree().change_scene("res://niveis/nivel1/nivel.tscn")
+

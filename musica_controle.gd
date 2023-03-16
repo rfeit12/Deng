@@ -1,7 +1,14 @@
 extends Node2D
 
-onready var battle_music = load("res://assets/musica_caindo.mp3")
+onready var musica_completa = load("res://assets/musica_completa.mp3")
 
-func tocar(musica):
+var no_nivel = false
+
+func tocar(musica = musica_completa):
 	$musica.stream = musica
 	$musica.play()
+	$musica.volume_db = -15
+
+func reiniciar(musica = musica_completa):
+	$musica.pause_mode = true
+	tocar()
