@@ -965,7 +965,7 @@ position = Vector2( -16, 0 )
 shape = SubResource( 232 )
 
 [node name="player" parent="." instance=ExtResource( 7 )]
-position = Vector2( 3235, -496 )
+position = Vector2( 296, 445 )
 
 [node name="TeclasWasd" type="Sprite" parent="."]
 visible = false
