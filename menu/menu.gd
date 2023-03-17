@@ -21,7 +21,6 @@ const PLAYER_COLORS = [
 ]
 
 func _ready():
-	MusicaControle.stop()
 	$AudioStreamPlayer2D.stream = musica_inicio
 	$AudioStreamPlayer2D.play()
 	

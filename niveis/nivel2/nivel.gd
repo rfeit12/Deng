@@ -71,6 +71,6 @@ func _on_fogueira_animacao_body_entered(body):
 	player.motion.x = 0
 	player.motion.y = 70
 	yield(get_tree().create_timer(2), "timeout")
-	transition_camera2D($player/Camera2D, $Camera_final, 40)
-	yield(get_tree().create_timer(41), "timeout")
+	transition_camera2D($player/Camera2D, $Camera_final, 20)
+	yield(get_tree().create_timer(20), "timeout")
 	get_tree().change_scene("res://tela_final.tscn")

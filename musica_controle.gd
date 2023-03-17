@@ -12,3 +12,6 @@ func tocar(musica = musica_completa):
 func reiniciar(musica = musica_completa):
 	$musica.pause_mode = true
 	tocar()
+
+func parar():
+	$musica.stream_paused = true
