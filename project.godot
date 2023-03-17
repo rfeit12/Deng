@@ -20,6 +20,10 @@ TransicaoCamera="*res://TransicaoCamera.tscn"
 Global="*res://global.gd"
 MusicaControle="*res://musica_controle.tscn"
 
+[display]
+
+window/stretch/aspect="keep"
+
 [gui]
 
 common/drop_mouse_on_gui_input_disabled=true

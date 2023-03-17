@@ -21,8 +21,9 @@ const PLAYER_COLORS = [
 ]
 
 func _ready():
-		$AudioStreamPlayer2D.stream = musica_inicio
-		$AudioStreamPlayer2D.play()
+	MusicaControle.stop()
+	$AudioStreamPlayer2D.stream = musica_inicio
+	$AudioStreamPlayer2D.play()
 	
 func _on_TextureButton_pressed():
 	$HUD/TextureButton.disabled = true

@@ -6,7 +6,7 @@ onready var tween = get_node("Camera2D/Tween")
 onready var nivel = get_node("res://nivel.tscn/nivel")
 
 func _ready():
-	MusicaControle.no_nivel = true
+	MusicaControle.tocar()
 	$fade_out.color = Color(0,0,0,0)
 	player.motion.y = 500
 	$player/Sprite.flip_h = true
@@ -58,15 +58,14 @@ func transition_camera2D(from: Camera2D, to: Camera2D, duration: float = 2.5) ->
 	to.current = true
 
 
-func _on_chave_body_entered(body):
-	if body is Area2D:
-		$chave.show()
-		
-
-
 func _on_dano_body_entered(body):
 	if body == player:
 		$fade_out.color = Color(0,0,0,1)
 		MusicaControle.reiniciar()
 		yield(get_tree().create_timer(1.5), "timeout")
 		get_tree().change_scene("res://niveis/nivel1/nivel.tscn")
+
+
+func _on_passar_nivel_body_entered(body):
+	if body == $player:
+		get_tree().change_scene("res://niveis/nivel2/nivel.tscn")
